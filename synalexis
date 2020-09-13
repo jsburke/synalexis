@@ -3,6 +3,10 @@
 #  -h  --help                         Print this message
 #
 # Making and building configurations
+#  -b  --bind <pdf-name>              Build the pdf dictionary with
+#                                     the files present in the
+#                                     chapters subdir
+#
 
 import os, sys, argparse, subprocess
 
