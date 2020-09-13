@@ -1,0 +1,85 @@
+#!/usr/bin/env python3
+#autocore usage:
+#  -h  --help                         Print this message
+#
+# Making and building configurations
+
+import os, sys, argparse, subprocess
+
+here =  os.path.abspath(os.path.dirname(sys.argv[0]))
+
+# script controls
+
+conf_delimiter = "--"
+
+#############################
+##                         ##
+## Command Line            ##
+##                         ##
+#############################
+
+class parser_with_error(argparse.ArgumentParser):
+  def error(self, msg = ""):
+    if(msg): print("ERROR: %s" % msg)
+    source = open(sys.argv[0]) # open the source for this script
+    for(line_num, line) in enumerate(source):
+      if(line[0] != "#"): sys.exit(msg != "") # exit program
+      if(line_num > 0):   print(line[1:].rstrip("\n"))
+
+def parse():
+  parser = parser_with_error(add_help = False)
+
+  # basic use args
+
+  mode = parser.add_mutually_exclusive_group(required = True)
+
+  mode.add_argument("-n", "--new",   type = str)
+  mode.add_argument("-b", "--build", type = str)
+  mode.add_argument("-f", "--fast",  type = str)
+  mode.add_argument("-h", "--help", action = "store_true") # put help here to avoid dumb errors
+
+  # sub args for --new
+
+  parser.add_argument("--core", choices = cores, type = str)
+  parser.add_argument("--arch", type = str)
+  parser.add_argument("--priv", choices = privs, type = str)
+  parser.add_argument("--fabric", choices = fabrics, type = str)
+  parser.add_argument("--tv", action = "store_true")
+  parser.add_argument("--db", action = "store_true")
+  parser.add_argument("--init-mem-zero", action = "store_true")
+  parser.add_argument("--mult", choices = multipliers, type = str)
+  parser.add_argument("--shift", choices = shifters, type = str)
+  parser.add_argument("--near-mem", choices = near_mems, type = str)
+  parser.add_argument("--target", choices = targets, type = str)
+  parser.add_argument("--top-file", type = str)
+  parser.add_argument("--bsc-path", type = str)
+
+  # sub args for --build
+
+  parser.add_argument("--dry-run", action = "store_true")
+  parser.add_argument("--force-target", choices = targets, type = str)
+
+  options     = parser.parse_args()
+
+  if options.help:
+    parser.error()
+  else:
+    return args_status_get(options, sys.argv) # dict of (argparse-dest, value given)
+
+#############################
+##                         ##
+## Support Functions       ##
+##                         ##
+#############################
+
+#############################
+##                         ##
+## Main Script             ##
+##                         ##
+#############################
+
+def main():
+  options = parse()
+
+
+main()
