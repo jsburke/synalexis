@@ -12,13 +12,13 @@
 #  -p  --purge                        Delete non-source files
 #
 
-import os, sys, argparse, subprocess
+import os, sys, argparse
 
 here =  os.path.abspath(os.path.dirname(sys.argv[0]))
 
 # script controls
 
-conf_delimiter = "--"
+intermediate_files = ["log", "aux", "out", "toc"]
 
 #############################
 ##                         ##
@@ -59,6 +59,14 @@ def parse():
 ##                         ##
 #############################
 
+def files_delete(suffixes):
+  for suffix in suffixes:
+    command = 'find . -name "*.' + suffix + '" -type f -delete'
+    print(command)
+    os.system(command)
+
+def language_bind(lang):
+  return 0
 #############################
 ##                         ##
 ## Main Script             ##
@@ -67,11 +75,14 @@ def parse():
 
 def main():
   options = parse()
+
   if options.bind:
-    print("bind")
-  if options.clean:
-    print("clean")
-  if options.purge:
-    print("purge")
+    language_bind(options.bind)
+  elif options.clean:
+    files_delete(intermediate_files)
+  elif options.purge:
+    files_delete(intermediate_files + ["pdf"])
+  else:
+    print("error")
 
 main()
