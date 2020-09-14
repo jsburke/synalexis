@@ -2,10 +2,14 @@
 #autocore usage:
 #  -h  --help                         Print this message
 #
-# Making and building configurations
-#  -b  --bind <pdf-name>              Build the pdf dictionary with
-#                                     the files present in the
-#                                     chapters subdir
+# Building options (mutually exclusive)
+#  -b  --bind <lang>                  Build the pdf for a language 
+#                                     in the <lang> subdirectory
+#
+#  -c  --clean                        Delete non-source, non-pdf
+#                                     files
+#
+#  -p  --purge                        Delete non-source files
 #
 
 import os, sys, argparse, subprocess
