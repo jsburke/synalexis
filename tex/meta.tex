@@ -15,11 +15,17 @@
 %\renewcommand{\footrulewidth}{1.4pt} % Rule under the footer
 \pagestyle{fancy} % Use the custom headers and footers throughout the document
 
+% parameters for page layout
+
 \newcommand{\topmargin}{3.5cm}
 \newcommand{\bottommargin}{3.2cm}
 \newcommand{\sidemargin}{2.8cm}
-\newcommand{\setcolumn}{30pt}
+\newcommand{\setcolumn}{10pt}
+\newcommand{\colcount}{3}
 
 \usepackage[left=\sidemargin, right=\sidemargin, top=\topmargin, bottom=\bottommargin, columnsep=\setcolumn]{geometry}
 
 \newcommand{\vertspace}{\vspace{3mm}}
+
+\newcommand{\startulti}{\begin{multicols}{\colcount}}
+\newcommand{\endmulti}{\end{multicols}}
